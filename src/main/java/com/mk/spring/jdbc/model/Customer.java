@@ -1,4 +1,4 @@
-package com.journaldev.spring.jdbc.model;
+package com.mk.spring.jdbc.model;
 
 public class Customer {
 

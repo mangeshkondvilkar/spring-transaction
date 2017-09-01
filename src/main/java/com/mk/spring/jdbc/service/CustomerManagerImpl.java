@@ -1,9 +1,9 @@
-package com.journaldev.spring.jdbc.service;
+package com.mk.spring.jdbc.service;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.journaldev.spring.jdbc.dao.CustomerDAO;
-import com.journaldev.spring.jdbc.model.Customer;
+import com.mk.spring.jdbc.dao.CustomerDAO;
+import com.mk.spring.jdbc.model.Customer;
 
 public class CustomerManagerImpl implements CustomerManager {
 

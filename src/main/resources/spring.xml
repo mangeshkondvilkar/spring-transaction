@@ -10,29 +10,44 @@
 	<tx:annotation-driven proxy-target-class="true"
 		transaction-manager="transactionManager" />
 
+	<context:property-placeholder location="classpath:db.properties" />
+
 	<!-- Creating TransactionManager Bean, since JDBC we are creating of type 
 		DataSourceTransactionManager -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
+
+	<!-- MySQL DB DataSource -->
+	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" /> <property 
+		name="url" value="jdbc:mysql://localhost:3306/TestDB" /> <property name="username" 
+		value="mangesh" /> <property name="password" value="mangesh123" /> </bean> -->
+
 	<!-- MySQL DB DataSource -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/TestDB" />
-		<property name="username" value="pankaj" />
-		<property name="password" value="pankaj123" />
+		<property name="driverClassName" value="${DB_DRIVER_CLASS}" />
+		<property name="url" value="${DB_URL}" />
+		<property name="username" value="${DB_USER}" />
+		<property name="password" value="${DB_PASS}" />
 	</bean>
 
-	<bean id="customerDAO" class="com.journaldev.spring.jdbc.dao.CustomerDAOImpl">
+	<bean id="customerDAO" class="com.mk.spring.jdbc.dao.CustomerDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="customerManager" class="com.mk.spring.jdbc.service.CustomerManagerImpl">
+		<property name="customerDAO" ref="customerDAO" />
+	</bean>
+
+	<bean id="eventManager" class="com.mk.spring.jdbc.service.EventManagerImpl">
+		<property name="eventDao" ref="eventDao" />
+	</bean>
+
+	<bean id="eventDao" class="com.mk.spring.jdbc.dao.EventDaoImpl">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
-
-	<bean id="customerManager" class="com.journaldev.spring.jdbc.service.CustomerManagerImpl">
-		<property name="customerDAO" ref="customerDAO"></property>
-	</bean>
-
+	
 </beans>
